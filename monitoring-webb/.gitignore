@@ -4,7 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
-
+monitoring-backend
+monitoring-backend/node_modules/
+.../monitoring-backend/
+D:\Projects\Monitoring-web\monitoring-backend\node_modules/
 # testing
 /coverage
 
