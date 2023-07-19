@@ -1,0 +1,27 @@
+.projects-container {
+  width: 86%;
+}
+
+.add-project-btn {
+  float: right;
+  margin: 5em;
+  border-radius: 2px;
+  border: none;
+  padding: 0.4em;
+  background: royalblue;
+}
+
+.projects-list {
+  text-align: center;
+  /* margin-top: 13em; */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 9em;
+  gap: 1em;
+}
+.project-item:hover {
+  background: darkgray;
+}

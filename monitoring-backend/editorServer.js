@@ -2,60 +2,60 @@ const express = require("express");
 const app = express();
 var cors = require("cors");
 const bodyParser = require("body-parser");
-// const http = require("http");
-// const { Server } = require("socket.io");
-// const Actions = require("./Actions");
+const http = require("http");
+const { Server } = require("socket.io");
+const Actions = require("./Actions");
 
-// const server = http.createServer(app);
-// const io = new Server(server);
+const server = http.createServer(app);
+const io = new Server(server);
 
-// const userSocketMap = {};
-// const getAllConnectedClients = (roomId) => {
-//   return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
-//     (socketId) => {
-//       return {
-//         socketId,
-//         username: userSocketMap[socketId],
-//       };
-//     }
-//   );
-// };
+const userSocketMap = {};
+const getAllConnectedClients = (roomId) => {
+  return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
+    (socketId) => {
+      return {
+        socketId,
+        username: userSocketMap[socketId],
+      };
+    }
+  );
+};
 
-// io.on("connection", (socket) => {
-//   console.log("socket connection", socket.id);
-//   socket.on(Actions.JOIN, ({ roomId, username }) => {
-//     userSocketMap[socket.id] = username;
-//     socket.join(roomId);
-//     const clients = getAllConnectedClients(roomId);
-//     clients.forEach(({ socketId }) => {
-//       io.to(socketId).emit(Actions.Joined, {
-//         clients,
-//         username,
-//         socketId: socket.id,
-//       });
-//     });
-//   });
+io.on("connection", (socket) => {
+  console.log("socket connection", socket.id);
+  socket.on(Actions.JOIN, ({ roomId, username }) => {
+    userSocketMap[socket.id] = username;
+    socket.join(roomId);
+    const clients = getAllConnectedClients(roomId);
+    clients.forEach(({ socketId }) => {
+      io.to(socketId).emit(Actions.Joined, {
+        clients,
+        username,
+        socketId: socket.id,
+      });
+    });
+  });
 
-//   socket.on(Actions.CODE_CHANGE, ({ roomId, code }) => {
-//     // console.log("receing on server ", code);
-//     socket.in(roomId).emit(Actions.CODE_CHANGE, {
-//       code,
-//     });
-//   });
+  socket.on(Actions.CODE_CHANGE, ({ roomId, code }) => {
+    // console.log("receing on server ", code);
+    socket.in(roomId).emit(Actions.CODE_CHANGE, {
+      code,
+    });
+  });
 
-//   socket.on("disconnecting", () => {
-//     const rooms = [...socket.rooms];
+  socket.on("disconnecting", () => {
+    const rooms = [...socket.rooms];
 
-//     rooms.forEach((roomId) => {
-//       socket.in(roomId).emit(Actions.DISCONNECTED, {
-//         socketId: socket.id,
-//         username: userSocketMap[socket.id],
-//       });
-//     });
-//     delete userSocketMap[socket.id];
-//     socket.leave();
-//   });
-// });
+    rooms.forEach((roomId) => {
+      socket.in(roomId).emit(Actions.DISCONNECTED, {
+        socketId: socket.id,
+        username: userSocketMap[socket.id],
+      });
+    });
+    delete userSocketMap[socket.id];
+    socket.leave();
+  });
+});
 
 //
 //
@@ -87,7 +87,6 @@ var router = express.Router();
 const getProjects = require("./getProjects");
 const newProject = require("./helpers/NewProject");
 const UploadImages = require("./helpers/UploadImages");
-const getProfilePicofUser = require("./helpers/getProfilePicofUser");
 // const fileUpload = require("express-fileupload");
 const path = require("path");
 const multer = require("multer");
@@ -130,16 +129,6 @@ router.route("/projects/:company").get(async (req, res) => {
   res.json(response);
 });
 
-router.route("/getProfilePic/:id").get(async (req, res) => {
-  let response;
-  try {
-    response = { status: 200, ...(await getProfilePicofUser(req.params.id)) };
-  } catch (e) {
-    response = { status: 400, ...e };
-  }
-  res.json(response);
-});
-
 router.route("/Addproject/").post(async (req, res) => {
   console.log("cccccc");
   let response;
@@ -168,7 +157,7 @@ router
     res.json(response);
   });
 
-// server.listen(4500, () => console.log("socket in 4500"));
-var port = process.env.Port || 8000;
-app.listen(port);
-console.log("port runnin at po", port);
+server.listen(4500, () => console.log("socket in 4500"));
+// var port = process.env.Port || 8000;
+// app.listen(port);
+// console.log("port runnin at po", port);

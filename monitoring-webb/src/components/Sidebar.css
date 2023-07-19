@@ -1,7 +1,7 @@
 .sidebar-container {
   left: 0px;
-  position: absolute;
-  width: 200px;
+  width: 14%;
+  background: antiquewhite;
   height: 100vh;
 }
 .sidebar-items {

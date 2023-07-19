@@ -3,7 +3,7 @@ const config = require("../config");
 
 module.exports = (body) =>
   new Promise((resolve, reject) => {
-    console.log("aaaaaaaaaaa");
+    console.log("aaaaaaaaaaa", body);
 
     let { projectName, dateCreated, company } = body;
     console.log(projectName, dateCreated, company);
