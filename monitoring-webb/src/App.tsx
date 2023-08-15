@@ -7,6 +7,8 @@ import EditorHome from './pages/EditorHome';
 import EditorEdit from './pages/EditorEdit';
 import React from 'react'
 import { Toaster } from 'react-hot-toast'
+import './assets/main.css';
+import './index.css'
 
 const router = createBrowserRouter([
   {
@@ -15,7 +17,7 @@ const router = createBrowserRouter([
   {
     path: '/projects', element: <ProjectsPage />
   },
-  { path: '/projects/:projectId', element: <ProjectMonitoring /> },
+  { path: '/projects/:projectId/:projectName', element: <ProjectMonitoring /> },
   { path: '/EditorHome', element: <EditorHome /> },
   { path: 'EditorEdit/:roomId', element: <EditorEdit /> }
 ]);

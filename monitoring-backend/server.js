@@ -84,6 +84,7 @@ const bodyParser = require("body-parser");
 //
 //
 var router = express.Router();
+var newRouter = express.Router();
 const getProjects = require("./getProjects");
 const newProject = require("./helpers/NewProject");
 const UploadImages = require("./helpers/UploadImages");
@@ -91,6 +92,10 @@ const getProfilePicofUser = require("./helpers/getProfilePicofUser");
 // const fileUpload = require("express-fileupload");
 const path = require("path");
 const multer = require("multer");
+const AddRoom = require("./helpers/AddRoom");
+const getRooms = require("./helpers/getRooms");
+const AddImageForRoom = require("./helpers/AddImageForRoom");
+const getRoomImages = require("./helpers/getRoomImages");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -111,6 +116,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.use("/api", router);
+// app.use("/new", newRouter);
 
 router.use((req, res, next) => {
   console.log("middleware");
@@ -140,6 +146,16 @@ router.route("/getProfilePic/:id").get(async (req, res) => {
   res.json(response);
 });
 
+// router.route("/getIMagesROom/:roomid").get(async (req, res) => {
+//   let response;
+//   try {
+//     response = { status: 200, ...(await getRoomImages(req.params.roomid)) };
+//   } catch (e) {
+//     response = { status: 400, ...e };
+//   }
+//   res.json(response);
+// });
+
 router.route("/Addproject/").post(async (req, res) => {
   console.log("cccccc");
   let response;
@@ -168,6 +184,49 @@ router
     res.json(response);
   });
 
+router
+  .route("/addImageForRoom/")
+  .post(upload.single("files"), async function (req, res) {
+    // console.log(req, "rewsfsdfsdf");
+    // res.json({ status: "mmmdmfmsdfdf" });
+    console.log(req.file);
+    let response;
+    try {
+      response = {
+        status: 200,
+        ...(await AddImageForRoom(req.file, req.body)),
+      };
+    } catch (e) {
+      // res.json("Error Fetching Projects")
+      response = { status: 400, ...e };
+    }
+    res.json(response);
+  });
+
+router.route("/project/AddRoom/:ProjectId").post(async (req, res) => {
+  // console.log(req.file);
+  let response;
+  try {
+    response = { status: 200, ...(await AddRoom(req.body)) };
+  } catch (e) {
+    // res.json("Error Fetching Projects")
+    response = { status: 400, ...e };
+  }
+  res.json(response);
+});
+
+router.route("/getRooms/:ProjectId").get(async (req, res) => {
+  console.log("getroomssd fdsf dsf");
+  let response;
+  console.log(req);
+  try {
+    response = { status: 200, ...(await getRooms(req.params.ProjectId)) };
+  } catch (e) {
+    // res.json("Error Fetching Projects")
+    response = { status: 400, ...e };
+  }
+  res.json(response);
+});
 // server.listen(4500, () => console.log("socket in 4500"));
 var port = process.env.Port || 8000;
 app.listen(port);

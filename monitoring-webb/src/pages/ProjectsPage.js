@@ -38,13 +38,20 @@ function ProjectsPage() {
               className="project-item"
               style={{
                 border: "1px solid",
-                bordeRadius: "5px",
+                borderRadius: "5px",
                 padding: "5px",
               }}
             >
               <li
                 onClick={() => {
-                  history("/projects" + "/" + `${item.id}`);
+                  history(
+                    "/projects" + "/" + `${item.id}/${item.ProjectName} `,
+                    {
+                      state: {
+                        ProjectName: item.ProjectName,
+                      },
+                    }
+                  );
                 }}
                 style={{ textDecoration: "none", listStyle: "none" }}
               >

@@ -1,0 +1,33 @@
+.monitoring-main-Container {
+  display: flex;
+}
+.image-main-Container {
+  flex: 2;
+}
+
+.monitoring-sidebar-container {
+  background: #bfbcc6;
+  overflow-y: scroll;
+
+  height: 100vh;
+  max-width: 250px;
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: flex-end;
+  gap: 1em;
+  list-style: none;
+  justify-content: center;
+}
+.room-list-items {
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  background: #eee;
+  border-radius: 5px;
+}
+.add-imageForRoom {
+  float: right;
+  margin: 2em 1em;
+}

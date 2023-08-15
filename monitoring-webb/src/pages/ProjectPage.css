@@ -23,5 +23,6 @@
   gap: 1em;
 }
 .project-item:hover {
-  background: darkgray;
+  background: rgba(220, 221, 222, 0.599);
+  cursor: pointer;
 }

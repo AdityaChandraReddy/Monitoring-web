@@ -67,7 +67,7 @@ function SideBar() {
 
   let navigate = useNavigate()
   return (
-    <div className='sidebar-container'>
+    <div className='sidebar-container aside'>
       <div>
         <input
           ref={imagegUpload}
@@ -76,7 +76,7 @@ function SideBar() {
             imageSubmitHandler(e)
           }} type='file' name='profile-pic' style={{ display: "none" }} accept='image/*' />
 
-        <div style={{ height: "80px", width: "80px", borderRadius: 50 }}
+        <div style={{ height: "80px", width: "80px", borderRadius: 50, margin: "auto" }}
           onClick={() => {
             imagegUpload?.current?.click()!;
           }}>
@@ -94,7 +94,7 @@ function SideBar() {
       <div>
         <ul className='sidebar-items' >
           {sideBarItems.map((item, index) => <li
-            style={{ display: "flex", cursor: "pointer", gap: '1em' }}
+            style={{ display: "flex", cursor: "pointer", gap: '1em', padding: '10px' }}
             onClick={() => {
               // history.push(item.link)
               navigate(item.link)

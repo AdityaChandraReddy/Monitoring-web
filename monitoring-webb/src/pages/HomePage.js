@@ -37,7 +37,7 @@ function HomePage() {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
+    <div style={{ display: "flex", flexDirection: "row", gap: "3em" }}>
       <SideBar />
       <ProjectsPage />
     </div>
